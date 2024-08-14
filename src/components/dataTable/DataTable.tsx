@@ -1,14 +1,12 @@
 import { Table, TableProps } from "antd"
-import { FC, useEffect } from "react"
+import { FC } from "react"
 
 interface Props {
-    data: DataTableType[] | undefined
+    data: DataTableType[] | undefined;
+    loading: boolean;
 }
 
-const DataTable: FC<Props> = (data) => {
-    useEffect(() => {
-        console.log(data)
-    })
+const DataTable: FC<Props> = ({ data, loading }) => {
 
     const columns: TableProps<DataTableType>['columns'] = [
         {
@@ -101,7 +99,7 @@ const DataTable: FC<Props> = (data) => {
         <div className="data-table-container">
             <h3 className="title">Data Table</h3>
             <span className="subtitle">An overview of all the main data's</span>
-            <Table tableLayout="fixed" size="small" scroll={{ x: 1500 }} columns={columns} dataSource={data.data} />
+            <Table loading={loading} tableLayout="fixed" size="small" scroll={{ x: 1500 }} columns={columns} dataSource={data} />
         </div>
     )
 }

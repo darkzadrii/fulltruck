@@ -15,6 +15,7 @@ type FetchProps = {
 const MainPage: React.FC = () => {
   const [data, setData] = useState<MainData>();
   const [selectedPage, setSelectedPage] = useState("Dashboard");
+  const [loading, setLoading] = useState(true);
   const { fetchStatistics } = useStatistics();
 
   const fetchProps: FetchProps = {
@@ -30,10 +31,11 @@ const MainPage: React.FC = () => {
 
   useEffect(() => {
     // Fetch data when the component mounts
+    setLoading(true); // Start loading
     fetchStatistics(fetchProps)
       .then((result) => {
         setData(result as MainData);
-        console.log(result)
+        setLoading(false);
       })
       .catch((error) => {
         console.error('Error fetching statistics:', error);
@@ -45,13 +47,13 @@ const MainPage: React.FC = () => {
       <Header onSelectionChange={handleSelectionChange} />
       {
         selectedPage === NavigationType.dashboard && (
-          <DataTable data={data && data?.data_table} />
+          <DataTable loading={loading} data={data && data?.data_table} />
         )
       }
 
       {
         selectedPage === NavigationType.dataTable && (
-          <DataTable data={data && data?.data_table} />
+          <DataTable loading={loading} data={data && data?.data_table} />
         )
       }
     </>
