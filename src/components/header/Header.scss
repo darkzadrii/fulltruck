@@ -1,0 +1,39 @@
+.header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 44px;
+
+    &-selection {
+        display: inherit;
+        flex-direction: inherit;
+        align-items: center;
+
+        button {
+            width: 100px;
+
+            .ant-btn-icon {
+                display: none !important;
+            }
+
+            @media (min-width: 833px) {
+                .ant-btn-icon {
+                    display: inline-block !important;
+                }
+            }
+        }
+    }
+
+    .selected-button {
+        font-weight: bold;
+        border-bottom: 2px solid #1890ff;
+    }
+}
+
+.ant-menu-light.ant-menu-root.ant-menu-inline {
+    border-inline-end: unset !important
+}
+
+.ant-drawer-header {
+    display: none;
+}

@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import './App.css'
+import './App.scss'
 import MainPage from './components/mainpage/MainPage'
 
 const App: FC = () => {

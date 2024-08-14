@@ -1,0 +1,16 @@
+.data-table-container {
+    width: 100%;
+
+    .title,
+    .subtitle {
+        display: flex;
+    }
+
+    .title {
+        margin-block-end: unset;
+    }
+
+    .subtitle {
+        margin-bottom: 22px;
+    }
+}

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import DataTable from '../dataTable/DataTable';
 import useStatistics from '../../hook/useStatistics';
+import Header from '../header/Header';
+import { NavigationType } from '../../store/enum';
 
 // Define the type for the Props passed to fetchStatistics
 type FetchProps = {
@@ -12,6 +14,7 @@ type FetchProps = {
 
 const MainPage: React.FC = () => {
   const [data, setData] = useState<MainData>();
+  const [selectedPage, setSelectedPage] = useState("Dashboard");
   const { fetchStatistics } = useStatistics();
 
   const fetchProps: FetchProps = {
@@ -19,6 +22,10 @@ const MainPage: React.FC = () => {
     timeTarget: 'pickup_date',
     startDate: '2024-01-01',
     endDate: '2024-01-31',
+  };
+
+  const handleSelectionChange = (value: string) => {
+    setSelectedPage(value);
   };
 
   useEffect(() => {
@@ -34,10 +41,20 @@ const MainPage: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Main Page</h1>
-      <DataTable data={data && data?.data_table} />
-    </div>
+    <>
+      <Header onSelectionChange={handleSelectionChange} />
+      {
+        selectedPage === NavigationType.dashboard && (
+          <DataTable data={data && data?.data_table} />
+        )
+      }
+
+      {
+        selectedPage === NavigationType.dataTable && (
+          <DataTable data={data && data?.data_table} />
+        )
+      }
+    </>
   );
 };
 
