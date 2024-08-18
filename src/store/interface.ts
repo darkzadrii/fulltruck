@@ -34,12 +34,12 @@ interface OrderData {
 }
 
 interface TimeOrderCount {
-  data: OrderData[];
+  data: OrderData[] | undefined;
   index_by: string;
 }
 
 interface TimeMarginPerc {
-  data: MarginData[];
+  data: MarginData[] | undefined;
   index_by: string;
 }
 
@@ -50,7 +50,7 @@ interface RevenueData {
 }
 
 interface TimeRevenue {
-  data: RevenueData[];
+  data: RevenueData[] | undefined;
   index_by: string;
 }
 

@@ -27,11 +27,8 @@ const useStatistics = () => {
     toggleRef.current = !toggleRef.current
     return new Promise((resolve) => {
       const delay = Math.random() * 3000 + 500
-      // setTimeout(() => {
-      //   toggleRef.current ? resolve(json1) : resolve(json2)
-      // }, delay)
-            setTimeout(() => {
-        resolve(json1)
+      setTimeout(() => {
+        toggleRef.current ? resolve(json1) : resolve(json2)
       }, delay)
     })
   }

@@ -10,15 +10,15 @@ interface Props {
 }
 
 const Histograms: FC<Props> = ({ histograms }) => {
+    if (!histograms) return;
 
     const { isMobile } = useResizeHandler();
-
-    const transformDataForChart = (data: any[], key: string, label: string) => ({
-        labels: data.map((item: { date: any; }) => item.date),
+    const transformDataForChart = (data: any[] | undefined, key: string, label: string) => ({
+        labels: (data || []).map((item: { date: string; }) => item.date),
         datasets: [
             {
                 label: label,
-                data: data.map((item: { [x: string]: any; }) => item[key]),
+                data: (data || []).map((item: { [x: string]: any; }) => item[key]),
                 backgroundColor: 'rgba(75, 192, 192, 0.6)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
@@ -41,13 +41,7 @@ const Histograms: FC<Props> = ({ histograms }) => {
     };
 
     return (
-        <div
-            style={{
-                width: '100%',
-                height: '100%'
-            }}
-
-        >
+        <div className='histogram'>
             {
                 histograms && histograms?.time_margin_perc && (
                     <div style={{
@@ -80,18 +74,18 @@ const Histograms: FC<Props> = ({ histograms }) => {
                         <h3>Revenue and Margin Over Time</h3>
                         <Bar
                             data={{
-                                labels: histograms.time_revenue.data.map(item => item.date),
+                                labels: histograms?.time_revenue?.data?.map(item => item.date),
                                 datasets: [
                                     {
                                         label: 'Revenue',
-                                        data: histograms.time_revenue.data.map(item => item.revenue),
+                                        data: histograms?.time_revenue?.data?.map(item => item.revenue),
                                         backgroundColor: 'rgba(153, 102, 255, 0.6)',
                                         borderColor: 'rgba(153, 102, 255, 1)',
                                         borderWidth: 1,
                                     },
                                     {
                                         label: 'Margin',
-                                        data: histograms.time_revenue.data.map(item => item.margin_abs),
+                                        data: histograms?.time_revenue?.data?.map(item => item.margin_abs),
                                         backgroundColor: 'rgba(255, 159, 64, 0.6)',
                                         borderColor: 'rgba(255, 159, 64, 1)',
                                         borderWidth: 1,
