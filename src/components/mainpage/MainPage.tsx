@@ -3,8 +3,11 @@ import DataTable from '../dataTable/DataTable';
 import useStatistics from '../../hook/useStatistics';
 import Header from '../header/Header';
 import { NavigationType } from '../../store/enum';
+import { DatePicker } from 'antd';
+import Histograms from '../histograms/Histograms';
 
-// Define the type for the Props passed to fetchStatistics
+const { RangePicker } = DatePicker;
+
 type FetchProps = {
   aggregateBy: 'day' | 'week' | 'month';
   timeTarget: 'pickup_date' | 'created_at';
@@ -31,7 +34,7 @@ const MainPage: React.FC = () => {
 
   useEffect(() => {
     // Fetch data when the component mounts
-    setLoading(true); // Start loading
+    setLoading(true);
     fetchStatistics(fetchProps)
       .then((result) => {
         setData(result as MainData);
@@ -45,15 +48,24 @@ const MainPage: React.FC = () => {
   return (
     <>
       <Header onSelectionChange={handleSelectionChange} />
+      <RangePicker />
       {
         selectedPage === NavigationType.dashboard && (
-          <DataTable loading={loading} data={data && data?.data_table} />
+          <>
+            <DataTable loading={loading} data={data && data?.data_table} />
+            <Histograms histograms={data && data?.histograms} />
+          </>
         )
       }
 
       {
         selectedPage === NavigationType.dataTable && (
           <DataTable loading={loading} data={data && data?.data_table} />
+        )
+      }
+      {
+        selectedPage === NavigationType.histograms && (
+          <Histograms histograms={data && data?.histograms} />
         )
       }
     </>
