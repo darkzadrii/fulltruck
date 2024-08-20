@@ -1,0 +1,23 @@
+.scalars-grid {
+  margin-top: 20px;
+
+  &-card {
+    max-width: 200px;
+  }
+
+  @media screen and (max-width: 768px) {
+
+    .doughnut-chart,
+    .bar-chart {
+      width: 100%
+    }
+
+    .bar-chart {
+      height: 300px
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    padding: 20px;
+  }
+}

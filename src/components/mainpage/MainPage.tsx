@@ -7,6 +7,8 @@ import { DatePicker, Select } from 'antd';
 import Histograms from '../histograms/Histograms';
 import moment from 'moment';
 import KpiGrid from '../kpiGrid/KpiGrid';
+import ScalarsGrid from '../scalarsGrid/ScalarsGrid';
+import ScalarsDoughnutChart from '../scalarsGrid/ScalarsGrid';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -122,34 +124,38 @@ const MainPage: React.FC = () => {
   return (
     <>
       <Header onSelectionChange={handleSelectionChange} />
-      <div className="filter-container">
-        <RangePicker
-          className="range-picker"
-          onChange={handleDateRangeChange}
-        />
-        <div className="filter-container-row">
-          <Select
-            defaultValue="pickup_date"
-            style={{ width: 120 }}
-            onChange={handleTimeTargetChange}
-          >
-            <Option value="pickup_date">Pickup Date</Option>
-            <Option value="created_at">Created At</Option>
-          </Select>
-          <Select
-            defaultValue="day"
-            style={{ width: 120 }}
-            onChange={handleAggregationChange}
-          >
-            <Option value="day">Day</Option>
-            <Option value="week">Week</Option>
-            <Option value="month">Month</Option>
-          </Select>
-        </div>
-      </div>
+      {selectedPage !== NavigationType.kpiGrid &&
+        selectedPage !== NavigationType.scalars && (
+          <div className="filter-container">
+            <RangePicker
+              className="range-picker"
+              onChange={handleDateRangeChange}
+            />
+            <div className="filter-container-row">
+              <Select
+                defaultValue="pickup_date"
+                style={{ width: 120 }}
+                onChange={handleTimeTargetChange}
+              >
+                <Option value="pickup_date">Pickup Date</Option>
+                <Option value="created_at">Created At</Option>
+              </Select>
+              <Select
+                defaultValue="day"
+                style={{ width: 120 }}
+                onChange={handleAggregationChange}
+              >
+                <Option value="day">Day</Option>
+                <Option value="week">Week</Option>
+                <Option value="month">Month</Option>
+              </Select>
+            </div>
+          </div>
+        )}
 
       {selectedPage === NavigationType.dashboard && (
         <>
+          <ScalarsDoughnutChart scalars={data && data.scalars} />
           <DataTable loading={loading} data={filteredDate?.data_table} />
           <Histograms loading={loading} histograms={filteredDate?.histograms} />
           <KpiGrid loading={loading} kpis={data && data.kpis} />
@@ -166,6 +172,10 @@ const MainPage: React.FC = () => {
 
       {selectedPage === NavigationType.kpiGrid && (
         <KpiGrid loading={loading} kpis={data && data.kpis} />
+      )}
+
+      {selectedPage === NavigationType.scalars && (
+        <ScalarsGrid scalars={data && data.scalars} />
       )}
     </>
   );

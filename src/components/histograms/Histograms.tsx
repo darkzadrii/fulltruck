@@ -102,7 +102,6 @@ const Histograms: FC<Props> = ({ histograms, loading }) => {
                 <div
                   style={{
                     height: '500px',
-                    marginBottom: '88px',
                   }}
                 >
                   <h3>Margin Percentage Over Time</h3>
@@ -113,6 +112,11 @@ const Histograms: FC<Props> = ({ histograms, loading }) => {
                       'margin_perc',
                       'Margin Percentage',
                     )}
+                    style={{
+                      backgroundColor: 'white',
+                      borderRadius: '8px',
+                      padding: '20px',
+                    }}
                     options={options}
                   />
                 </div>
@@ -140,6 +144,11 @@ const Histograms: FC<Props> = ({ histograms, loading }) => {
                       'order_count',
                       'Order Count',
                     )}
+                    style={{
+                      backgroundColor: 'white',
+                      borderRadius: '8px',
+                      padding: '20px',
+                    }}
                     options={options}
                   />
                 </div>
@@ -162,6 +171,11 @@ const Histograms: FC<Props> = ({ histograms, loading }) => {
                 >
                   <h3>Revenue and Margin Over Time</h3>
                   <Bar
+                    style={{
+                      backgroundColor: 'white',
+                      borderRadius: '8px',
+                      padding: '20px',
+                    }}
                     data={{
                       labels: histograms?.time_revenue?.data?.map(
                         item => item.date,
