@@ -1,6 +1,9 @@
 @import "./components/header/Header.scss";
 @import "./components/dataTable/DataTable.scss";
 @import "./components/mainpage/MainPage.scss";
+@import "./components/skeleton/ChartSkeleton.scss";
+@import "./components/histograms/Histograms.scss";
+@import "./components/kpiGrid/KpiGrid.scss";
 
 #root {
   display: flex;
@@ -29,6 +32,17 @@
 
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+.ant-picker-dropdown .ant-picker-panel-container .ant-picker-panels {
+  display: inline-flex;
+  animation: none;
+  flex-wrap: nowrap;
+  direction: ltr;
+
+  @media (max-width: 768px) {
+    display: inline-grid;
+  }
 }
 
 @keyframes logo-spin {

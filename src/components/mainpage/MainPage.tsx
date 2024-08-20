@@ -5,7 +5,8 @@ import Header from '../header/Header';
 import { NavigationType } from '../../store/enum';
 import { DatePicker, Select } from 'antd';
 import Histograms from '../histograms/Histograms';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
+import KpiGrid from '../kpiGrid/KpiGrid';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -19,9 +20,13 @@ type FetchProps = {
 
 const MainPage: React.FC = () => {
   const [data, setData] = useState<MainData>();
-  const [selectedPage, setSelectedPage] = useState("Dashboard");
-  const [timeTarget, setTimeTarget] = useState<'pickup_date' | 'created_at'>('pickup_date');
-  const [aggregationType, setAggregationType] = useState<'day' | 'week' | 'month'>('day');
+  const [selectedPage, setSelectedPage] = useState('Dashboard');
+
+  const [, setTimeTarget] = useState<'pickup_date' | 'created_at'>(
+    'pickup_date',
+  );
+  const [, setAggregationType] = useState<'day' | 'week' | 'month'>('day');
+
   const [fetchProps, setFetchProps] = useState<FetchProps>({
     aggregateBy: 'day',
     timeTarget: 'pickup_date',
@@ -42,29 +47,35 @@ const MainPage: React.FC = () => {
     const startDate = start.format('YYYY-MM-DD');
     const endDate = end.format('YYYY-MM-DD');
 
-    const filteredDataTable = data?.data_table?.filter((entry) => {
+    const filteredDataTable = data?.data_table?.filter(entry => {
       const entryDate = moment(entry.aggregate_date).format('YYYY-MM-DD');
       return entryDate >= startDate && entryDate <= endDate;
     });
 
     const filteredHistograms = {
       time_margin_perc: {
-        data: data?.histograms?.time_margin_perc?.data?.filter((entry) => {
-          const entryDate = moment(entry.date, 'DD-MM-YYYY').format('YYYY-MM-DD');
+        data: data?.histograms?.time_margin_perc?.data?.filter(entry => {
+          const entryDate = moment(entry.date, 'DD-MM-YYYY').format(
+            'YYYY-MM-DD',
+          );
           return entryDate >= startDate && entryDate <= endDate;
         }),
         index_by: 'date',
       },
       time_order_count: {
-        data: data?.histograms?.time_order_count?.data?.filter((entry) => {
-          const entryDate = moment(entry.date, 'DD-MM-YYYY').format('YYYY-MM-DD');
+        data: data?.histograms?.time_order_count?.data?.filter(entry => {
+          const entryDate = moment(entry.date, 'DD-MM-YYYY').format(
+            'YYYY-MM-DD',
+          );
           return entryDate >= startDate && entryDate <= endDate;
         }),
         index_by: 'date',
       },
       time_revenue: {
-        data: data?.histograms?.time_revenue?.data?.filter((entry) => {
-          const entryDate = moment(entry.date, 'DD-MM-YYYY').format('YYYY-MM-DD');
+        data: data?.histograms?.time_revenue?.data?.filter(entry => {
+          const entryDate = moment(entry.date, 'DD-MM-YYYY').format(
+            'YYYY-MM-DD',
+          );
           return entryDate >= startDate && entryDate <= endDate;
         }),
         index_by: 'date',
@@ -83,7 +94,7 @@ const MainPage: React.FC = () => {
     setTimeTarget(value);
     setFetchProps(prev => ({
       ...prev,
-      timeTarget: value
+      timeTarget: value,
     }));
   };
 
@@ -91,34 +102,45 @@ const MainPage: React.FC = () => {
     setAggregationType(value);
     setFetchProps(prev => ({
       ...prev,
-      aggregateBy: value
+      aggregateBy: value,
     }));
   };
 
   useEffect(() => {
     setLoading(true);
     fetchStatistics(fetchProps)
-      .then((result) => {
+      .then(result => {
         setData(result as MainData);
         setLoading(false);
-        setFilteredData(result as MainData)
+        setFilteredData(result as MainData);
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Error fetching statistics:', error);
       });
-  }, []);
+  }, [fetchProps]);
 
   return (
     <>
       <Header onSelectionChange={handleSelectionChange} />
-      <div className='filter-container'>
-        <RangePicker className='range-picker' onChange={handleDateRangeChange} />
-        <div className='filter-container-row'>
-          <Select defaultValue="pickup_date" style={{ width: 120 }} onChange={handleTimeTargetChange}>
+      <div className="filter-container">
+        <RangePicker
+          className="range-picker"
+          onChange={handleDateRangeChange}
+        />
+        <div className="filter-container-row">
+          <Select
+            defaultValue="pickup_date"
+            style={{ width: 120 }}
+            onChange={handleTimeTargetChange}
+          >
             <Option value="pickup_date">Pickup Date</Option>
             <Option value="created_at">Created At</Option>
           </Select>
-          <Select defaultValue="day" style={{ width: 120 }} onChange={handleAggregationChange}>
+          <Select
+            defaultValue="day"
+            style={{ width: 120 }}
+            onChange={handleAggregationChange}
+          >
             <Option value="day">Day</Option>
             <Option value="week">Week</Option>
             <Option value="month">Month</Option>
@@ -126,25 +148,25 @@ const MainPage: React.FC = () => {
         </div>
       </div>
 
-      {
-        selectedPage === NavigationType.dashboard && (
-          <>
-            <DataTable loading={loading} data={filteredDate?.data_table} />
-            <Histograms histograms={filteredDate?.histograms} />
-          </>
-        )
-      }
-
-      {
-        selectedPage === NavigationType.dataTable && (
+      {selectedPage === NavigationType.dashboard && (
+        <>
           <DataTable loading={loading} data={filteredDate?.data_table} />
-        )
-      }
-      {
-        selectedPage === NavigationType.histograms && (
-          <Histograms histograms={filteredDate?.histograms} />
-        )
-      }
+          <Histograms loading={loading} histograms={filteredDate?.histograms} />
+          <KpiGrid loading={loading} kpis={data && data.kpis} />
+        </>
+      )}
+
+      {selectedPage === NavigationType.dataTable && (
+        <DataTable loading={loading} data={filteredDate?.data_table} />
+      )}
+
+      {selectedPage === NavigationType.histograms && (
+        <Histograms loading={loading} histograms={filteredDate?.histograms} />
+      )}
+
+      {selectedPage === NavigationType.kpiGrid && (
+        <KpiGrid loading={loading} kpis={data && data.kpis} />
+      )}
     </>
   );
 };
