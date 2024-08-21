@@ -1,3 +1,20 @@
+# Start project
+
+To start the project, simply run this command `npm run dev`
+
+## Component description
+
+There is one MainPage which handles all the other components:
+
+- Data Table, which contain the representation of the data inside data_table from the response (json files).
+- Histograms, which contains the representation of the data inside histograms from the response (json files).
+- Kpi Grid, which contain the representation of the data inside kpis, more specifically the carrier and client objects from the response (json files).
+- Scalars, which contains the representation the data inside scalars using Doughnut and Statistic component by Chart.js and Antd.
+
+There is also a Header visualizing the tab to navigate through the different components
+
+Also a component Skeleton is being created to handle the loading state.
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -22,7 +39,7 @@ export default {
     project: ['./tsconfig.json', './tsconfig.node.json'],
     tsconfigRootDir: __dirname,
   },
-}
+};
 ```
 
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
