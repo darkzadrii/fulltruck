@@ -33,40 +33,52 @@ const KpiGrid: React.FC<KpiGridProps> = ({ kpis, loading }) => {
 
   const renderKpiCard = (kpiKey: string, kpi: KPI) => (
     <Grid item xs={12} sm={6} md={4} key={kpiKey}>
-      <Card>
+      <Card
+        style={{
+          borderRadius: '8px',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          transition: 'transform 0.3s',
+        }}
+        onMouseOver={e => {
+          (e.currentTarget as HTMLDivElement).style.transform = 'scale(1.03)';
+        }}
+        onMouseOut={e => {
+          (e.currentTarget as HTMLDivElement).style.transform = 'scale(1)';
+        }}
+      >
         <CardContent>
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h6" gutterBottom style={{ color: '#003366' }}>
             {kpi.label}
           </Typography>
-          <Typography variant="body2">
+          <Typography variant="body2" style={{ color: '#666666' }}>
             <strong>Revenue:</strong> ${kpi.revenue.toFixed(2)}
           </Typography>
-          <Typography variant="body2">
+          <Typography variant="body2" style={{ color: '#666666' }}>
             <strong>Revenue per Order:</strong> $
             {kpi.revenue_per_order.toFixed(2)}
           </Typography>
-          <Typography variant="body2">
+          <Typography variant="body2" style={{ color: '#666666' }}>
             <strong>Revenue % on Total:</strong>{' '}
             {kpi.revenue_perc_on_tot.toFixed(2)}%
           </Typography>
-          <Typography variant="body2">
+          <Typography variant="body2" style={{ color: '#666666' }}>
             <strong>Margin Absolute:</strong> ${kpi.margin_abs.toFixed(2)}
           </Typography>
-          <Typography variant="body2">
+          <Typography variant="body2" style={{ color: '#666666' }}>
             <strong>Margin per Order:</strong> $
             {kpi.margin_abs_per_order.toFixed(2)}
           </Typography>
-          <Typography variant="body2">
+          <Typography variant="body2" style={{ color: '#666666' }}>
             <strong>Margin % on Total:</strong>{' '}
             {kpi.margin_abs_perc_on_tot.toFixed(2)}%
           </Typography>
-          <Typography variant="body2">
+          <Typography variant="body2" style={{ color: '#666666' }}>
             <strong>Margin %:</strong> {kpi.margin_perc.toFixed(2)}%
           </Typography>
-          <Typography variant="body2">
+          <Typography variant="body2" style={{ color: '#666666' }}>
             <strong>Order Count:</strong> {kpi.order_count}
           </Typography>
-          <Typography variant="body2">
+          <Typography variant="body2" style={{ color: '#666666' }}>
             <strong>Order Count % on Total:</strong>{' '}
             {kpi.order_count_perc_on_tot.toFixed(2)}%
           </Typography>
@@ -77,7 +89,12 @@ const KpiGrid: React.FC<KpiGridProps> = ({ kpis, loading }) => {
 
   const renderSkeletonCard = () => (
     <Grid item xs={12} sm={6} md={4}>
-      <Card>
+      <Card
+        style={{
+          borderRadius: '8px',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        }}
+      >
         <CardContent>
           <Skeleton loading={loading} avatar paragraph={{ rows: 6 }} />
         </CardContent>
@@ -89,7 +106,7 @@ const KpiGrid: React.FC<KpiGridProps> = ({ kpis, loading }) => {
     return (
       <div className="kpi-grid">
         <div>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom style={{ color: '#003366' }}>
             Carrier KPIs
           </Typography>
           <Grid container spacing={2}>
@@ -118,7 +135,7 @@ const KpiGrid: React.FC<KpiGridProps> = ({ kpis, loading }) => {
         </div>
 
         <div style={{ marginTop: 32 }}>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom style={{ color: '#003366' }}>
             Client KPIs
           </Typography>
           <Grid container spacing={2}>
@@ -156,7 +173,7 @@ const KpiGrid: React.FC<KpiGridProps> = ({ kpis, loading }) => {
   return (
     <div className="kpi-grid">
       <div>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h5" gutterBottom style={{ color: '#003366' }}>
           Carrier KPIs
         </Typography>
         <Grid container spacing={2}>
@@ -177,7 +194,7 @@ const KpiGrid: React.FC<KpiGridProps> = ({ kpis, loading }) => {
       </div>
 
       <div style={{ marginTop: 32 }}>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h5" gutterBottom style={{ color: '#003366' }}>
           Client KPIs
         </Typography>
         <Grid container spacing={2}>

@@ -35,6 +35,20 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+.card-transform {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s,
+}
+
+.card-shadow {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.typography {
+  color: #003366
+}
+
 .ant-picker-dropdown .ant-picker-panel-container .ant-picker-panels {
   display: inline-flex;
   animation: none;

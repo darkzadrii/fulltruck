@@ -135,6 +135,7 @@ const MainPage: React.FC = () => {
               <Select
                 defaultValue="pickup_date"
                 style={{ width: 120 }}
+                className="card-shadow"
                 onChange={handleTimeTargetChange}
               >
                 <Option value="pickup_date">Pickup Date</Option>
@@ -143,6 +144,7 @@ const MainPage: React.FC = () => {
               <Select
                 defaultValue="day"
                 style={{ width: 120 }}
+                className="card-shadow"
                 onChange={handleAggregationChange}
               >
                 <Option value="day">Day</Option>
@@ -155,7 +157,10 @@ const MainPage: React.FC = () => {
 
       {selectedPage === NavigationType.dashboard && (
         <>
-          <ScalarsDoughnutChart scalars={data && data.scalars} />
+          <ScalarsDoughnutChart
+            loading={loading}
+            scalars={data && data.scalars}
+          />
           <DataTable loading={loading} data={filteredDate?.data_table} />
           <Histograms loading={loading} histograms={filteredDate?.histograms} />
           <KpiGrid loading={loading} kpis={data && data.kpis} />
@@ -175,7 +180,7 @@ const MainPage: React.FC = () => {
       )}
 
       {selectedPage === NavigationType.scalars && (
-        <ScalarsGrid scalars={data && data.scalars} />
+        <ScalarsGrid loading={loading} scalars={data && data.scalars} />
       )}
     </>
   );

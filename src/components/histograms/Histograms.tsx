@@ -13,6 +13,7 @@ import { FC } from 'react';
 import useResizeHandler from '../../hook/useResizeHandler';
 import ChartSkeleton from '../skeleton/ChartSkeleton';
 import NoDataChart from '../../assets/img/no_data_chart.png';
+import { Typography } from '@mui/material';
 
 ChartJS.register(
   CategoryScale,
@@ -30,29 +31,30 @@ interface Props {
 
 const Histograms: FC<Props> = ({ histograms, loading }) => {
   const { isMobile } = useResizeHandler();
+
   const transformDataForChart = (
     data: any[] | undefined,
     key: string,
     label: string,
+    backgroundColor: string,
+    borderColor: string,
   ) => ({
     labels: (data || []).map((item: { date: string }) => item.date),
     datasets: [
       {
         label: label,
         data: (data || []).map((item: { [x: string]: any }) => item[key]),
-        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: backgroundColor,
+        borderColor: borderColor,
         borderWidth: 1,
       },
     ],
   });
 
-  // Check if specific histogram data is empty
   const isSpecificHistogramEmpty = (data: any[] | undefined) => {
     return !data || data.length === 0;
   };
 
-  // Check if all histograms are empty
   const isAllHistogramsEmpty = () => {
     return (
       isSpecificHistogramEmpty(histograms?.time_margin_perc?.data) &&
@@ -102,21 +104,22 @@ const Histograms: FC<Props> = ({ histograms, loading }) => {
                 <div
                   style={{
                     height: '500px',
+                    marginBottom: isMobile ? '88px' : 'unset',
                   }}
                 >
-                  <h3>Margin Percentage Over Time</h3>
+                  <Typography variant="h5" gutterBottom className="typography">
+                    Margin Percentage Over Time
+                  </Typography>
                   <Bar
                     height={'100%'}
                     data={transformDataForChart(
                       histograms?.time_margin_perc?.data,
                       'margin_perc',
                       'Margin Percentage',
+                      'rgba(75, 192, 192, 0.6)',
+                      'rgba(75, 192, 192, 1)',
                     )}
-                    style={{
-                      backgroundColor: 'white',
-                      borderRadius: '8px',
-                      padding: '20px',
-                    }}
+                    className="bar-style"
                     options={options}
                   />
                 </div>
@@ -137,18 +140,18 @@ const Histograms: FC<Props> = ({ histograms, loading }) => {
                     marginBottom: '88px',
                   }}
                 >
-                  <h3>Order Count Over Time</h3>
+                  <Typography variant="h5" gutterBottom className="typography">
+                    Order Count Over Time
+                  </Typography>
                   <Bar
                     data={transformDataForChart(
                       histograms.time_order_count.data,
                       'order_count',
                       'Order Count',
+                      'rgba(255, 99, 132, 0.6)',
+                      'rgba(255, 99, 132, 1)',
                     )}
-                    style={{
-                      backgroundColor: 'white',
-                      borderRadius: '8px',
-                      padding: '20px',
-                    }}
+                    className="bar-style"
                     options={options}
                   />
                 </div>
@@ -169,13 +172,11 @@ const Histograms: FC<Props> = ({ histograms, loading }) => {
                     marginBottom: '88px',
                   }}
                 >
-                  <h3>Revenue and Margin Over Time</h3>
+                  <Typography variant="h5" gutterBottom className="typography">
+                    Revenue and Margin Over Time
+                  </Typography>
                   <Bar
-                    style={{
-                      backgroundColor: 'white',
-                      borderRadius: '8px',
-                      padding: '20px',
-                    }}
+                    className="bar-style"
                     data={{
                       labels: histograms?.time_revenue?.data?.map(
                         item => item.date,

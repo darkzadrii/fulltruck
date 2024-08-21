@@ -11,10 +11,15 @@
 
 .histogram {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 
-    &-container {
-        height: 500px;
-        margin-bottom: 88px;
+    .bar-style {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 }
 
