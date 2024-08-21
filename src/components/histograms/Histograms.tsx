@@ -95,7 +95,8 @@ const Histograms: FC<Props> = ({ histograms, loading }) => {
                 alt="No data available"
               />
               <p style={{ textAlign: 'center' }}>
-                No histogram data available.
+                No histogram data available on the selected range of date,
+                please retry.
               </p>
             </div>
           ) : (

@@ -1,6 +1,32 @@
 .kpi-grid {
   padding-bottom: 88px;
 
+  &-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+
+    .input-filter,
+    .button-filter {
+      max-width: 200px;
+    }
+
+    .button-filter {
+      width: 150px;
+    }
+  }
+
+  .typography-kpi {
+    color: #666666
+  }
+
+  @media screen and (min-width: 768px) {
+    &-filters {
+      flex-direction: row;
+    }
+  }
+
   .MuiGrid-item {
     padding: 16px !important;
   }
