@@ -23,12 +23,6 @@ type FetchProps = {
 const MainPage: React.FC = () => {
   const [data, setData] = useState<MainData>();
   const [selectedPage, setSelectedPage] = useState('Dashboard');
-
-  const [, setTimeTarget] = useState<'pickup_date' | 'created_at'>(
-    'pickup_date',
-  );
-  const [, setAggregationType] = useState<'day' | 'week' | 'month'>('day');
-
   const [fetchProps, setFetchProps] = useState<FetchProps>({
     aggregateBy: 'day',
     timeTarget: 'pickup_date',
@@ -93,7 +87,6 @@ const MainPage: React.FC = () => {
   };
 
   const handleTimeTargetChange = (value: 'pickup_date' | 'created_at') => {
-    setTimeTarget(value);
     setFetchProps(prev => ({
       ...prev,
       timeTarget: value,
@@ -101,7 +94,6 @@ const MainPage: React.FC = () => {
   };
 
   const handleAggregationChange = (value: 'day' | 'week' | 'month') => {
-    setAggregationType(value);
     setFetchProps(prev => ({
       ...prev,
       aggregateBy: value,
