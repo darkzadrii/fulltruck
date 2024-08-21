@@ -1,6 +1,7 @@
 # Start project
 
-To start the project, simply run this command `npm run dev`
+To start the project, simply run `npm install`.
+After installing all packages then run `npm run dev` command on terminal.
 
 ## Component description
 
